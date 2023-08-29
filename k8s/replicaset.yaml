@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: goserver
+  labels:
+    app: goserver
+
+spec:
+#  Esse seletor servirá para, posteriormente, filtrarmos esses objetos para encaminharmos tráfego para eles.
+  selector:
+    matchLabels:
+      app: goserver
+
+#  Teremos duas réplicas do pod que subiremos.
+  replicas: 2
+
+# Abaixo, temos o template do Pod que rodaremos na ReplicaSet. Ele está igual
+# ao arquivo "pod.yaml". Assim, o ReplicaSet criará duas réplicas baseadas nesse
+# template.
+  template:
+    metadata:
+      name: "goserver"
+      labels:
+        app: "goserver"
+    spec:
+      containers:
+        - name: goserver
+          image: "wesleywillians/hello-go:latest"
